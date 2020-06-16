@@ -24,11 +24,14 @@ image_sizes = [512, 640, 768, 896, 1024, 1280, 1408]
 backbones = [EfficientNetB0, EfficientNetB1, EfficientNetB2,
              EfficientNetB3, EfficientNetB4, EfficientNetB5, EfficientNetB6]
 
+MOMENTUM = 0.997
+EPSILON = 1e-4
 
 def DepthwiseSeparableConvBlock(num_channels, kernel_size, strides, name, freeze_bn=False):
     f1 = layers.SeparableConv2D(num_channels, kernel_size=kernel_size, strides=strides, padding='same',
                                 use_bias=False, name='{}_dconv'.format(name))
-    f2 = BatchNormalization(freeze=freeze_bn, name='{}_bn'.format(name))
+    f2 = layers.BatchNormalization(momentum=MOMENTUM, epsilon=EPSILON, name=f'{name}/bn')
+    # f2 = BatchNormalization(freeze=freeze_bn, name='{}_bn'.format(name))
     f3 = layers.ReLU(name='{}_relu'.format(name))
     return reduce(lambda f, g: lambda *args, **kwargs: g(f(*args, **kwargs)), (f1, f2, f3))
 
@@ -36,7 +39,8 @@ def DepthwiseSeparableConvBlock(num_channels, kernel_size, strides, name, freeze
 def ConvBlock(num_channels, kernel_size, strides, name, freeze_bn=False):
     f1 = layers.Conv2D(num_channels, kernel_size=kernel_size, strides=strides, padding='same',
                        use_bias=False, name='{}_conv'.format(name))
-    f2 = BatchNormalization(freeze=freeze_bn, name='{}_bn'.format(name))
+    f2 = layers.BatchNormalization(momentum=MOMENTUM, epsilon=EPSILON, name='{}_bn'.format(name))
+    # f2 = BatchNormalization(freeze=freeze_bn, name='{}_bn'.format(name))
     f3 = layers.ReLU(name='{}_relu'.format(name))
     return reduce(lambda f, g: lambda *args, **kwargs: g(f(*args, **kwargs)), (f1, f2, f3))
 
