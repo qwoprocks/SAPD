@@ -361,7 +361,7 @@ class SAPDTarget(Layer):
         outputs = tf.map_fn(
             _build_sapd_target,
             elems=[batch_gt_boxes, batch_meta_select_weight],
-            dtype=(tf.float32, tf.float32),
+            dtype=[tf.float32, tf.float32],
         )
         return outputs
 
