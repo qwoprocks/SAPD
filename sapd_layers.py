@@ -120,18 +120,20 @@ def build_meta_select_target(cls_pred, regr_pred, gt_boxes, feature_shapes, stri
                 do_not_match_pixels_in_level,
                 do_match_pixels_in_level
             )
+            print(level_box_loss)
             return level_box_loss
 
         level_loss = tf.map_fn(
             compute_gt_box_loss,
             elems=[x1, y1, x2, y2, gt_boxes, gt_labels],
-            dtype=tf.float32
+            dtype=(tf.float32)
         )
         level_losses.append(level_loss)
     losses = tf.stack(level_losses, axis=-1)
     gt_box_levels = tf.argmin(losses, axis=-1, output_type=tf.int32)
     padding_gt_box_levels = tf.ones((max_gt_boxes - num_gt_boxes), dtype=tf.int32) * -1
     gt_box_levels = tf.concat([gt_box_levels, padding_gt_box_levels], axis=0)
+    print(gt_box_levels)
     return gt_box_levels
 
 
@@ -165,7 +167,7 @@ class MetaSelectTarget(Layer):
         batch_box_levels = tf.map_fn(
             _build_meta_select_target,
             elems=[batch_cls_pred, batch_regr_pred, batch_gt_boxes],
-            dtype=tf.int32,
+            dtype=(tf.int32),
         )
         batch_box_levels = tf.reshape(batch_box_levels, (-1,))
         mask = tf.not_equal(batch_box_levels, -1)
