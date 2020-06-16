@@ -348,6 +348,10 @@ class Generator(keras.utils.Sequence):
             np.zeros((len(image_group),), dtype=np.float32),  # cls_loss
             np.zeros((len(image_group),), dtype=np.float32),  # regr_loss
             np.zeros((len(image_group),), dtype=np.float32),  # meta_select_loss
+            np.zeros((len(image_group),), dtype=np.float32),  # meta_select_loss
+            np.zeros((len(image_group),), dtype=np.float32),  # meta_select_loss
+            np.zeros((len(image_group),), dtype=np.float32),  # meta_select_loss
+            np.zeros((len(image_group),), dtype=np.float32),  # meta_select_loss
         ]
 
         return targets
