@@ -1,7 +1,8 @@
 # SAPD (Soft Anchor Point Object Detection)
 This is an implementation of [SAPD](https://arxiv.org/abs/1911.12448) for object detection on Keras and Tensorflow. 
-The project is based on [fizyr/keras-retinanet](https://github.com/fizyr/keras-retinanet), [qubvel/efficientnet](https://github.com/qubvel/efficientnet),
+The project is a fork of [xuannianz/SAPD](https://github.com/xuannianz/SAPD), which is based on [fizyr/keras-retinanet](https://github.com/fizyr/keras-retinanet), [qubvel/efficientnet](https://github.com/qubvel/efficientnet),
 [xuannianz/EfficientDet](https://github.com/xuannianz/EfficientDet) and [xuannianz/FSAF](https://github.com/xuannianz/FSAF). 
+This repository only supports tensorflow 2.x, while the original, as of the time of writing this, only supports tensorflow 1.x
 The pretrained EfficientNet weights files are downloaded from [Callidior/keras-applications/releases](https://github.com/Callidior/keras-applications/releases)
 
 Thanks for their hard work.
